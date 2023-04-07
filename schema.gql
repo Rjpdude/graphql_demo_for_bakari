@@ -3,25 +3,262 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-type Burger {
-  customer: [Customer!]!
-  id: String!
-  price: String!
-  resturant: [String!]!
-  title: String!
+type AlternateSku {
+  sku: String!
+}
+
+type ConfigurationFile {
+  lastModifiedByName: String!
+  lastModifiedOn: String!
+  name: String!
+  partitionKey: String!
+  rawFileLocation: String!
+  status: String!
   type: String!
 }
 
-type Customer {
-  firstName: String!
-  id: ID!
-  lastName: String!
+type DataDomain {
+  diskSummaries: [DataDomainDiskSummary!]!
+  enclosures: [DataDomainEnclosure!]!
+  model: String!
+  quantity: Float!
 }
 
-type Mutation {
-  createBurger(id: String!, price: String!, title: String!, type: String!): Burger!
+"""Data Domain disk summary derived from a configuration file."""
+type DataDomainDisk {
+  capacity: String!
+  disk: Float!
+  enclosure: Float!
+  firmware: String!
+  manufacturer: String!
+  model: String!
+  serialNumber: String!
+  slot: String!
+  type: String!
+}
+
+type DataDomainDiskSummary {
+  capacity: String!
+  disks: [DataDomainDisk!]!
+  quantity: Float!
+  type: String!
+}
+
+type DataDomainEnclosure {
+  capacity: Float!
+  enclosure: Float!
+  modelNumber: String!
+  oemName: String!
+  oemValue: String!
+  serialNumber: String!
+  state: String!
+}
+
+type EmcSymmetrix {
+  baySummary: [SymmetrixBaySummary!]!
+  configFile: ConfigurationFile!
+  daeSummary: [SymmetrixDaeSummary!]!
+  dimmSummary: [SymmetrixDimmSummary!]!
+  directorSummary: SymmetrixDirectorSummary!
+  diskGroupSummary: [SymmetrixDiskGroupSummary!]!
+  diskSummary: [SymmetrixDiskSummary!]!
+  isTextParser: Boolean!
+  subTitle: String!
+  systemSummary: [SymmetrixSystemSummary!]!
+}
+
+type EmcVnxe {
+  daeDisks: [EmcVnxeDiskSummary!]!
+  daeEnclosures: [EmcVnxeEnclosureSummary!]!
+  dpeDisks: [EmcVnxeDiskSummary!]!
+  dpeEnclosures: [EmcVnxeEnclosureSummary!]!
+}
+
+type EmcVnxeDisk {
+  enclosure: String!
+  itemMasterDisk: ItemMasterDisk!
+  manufacturer: String!
+  model: String!
+  number: Int!
+  partNumber: String!
+  serialNumber: String!
+  sparePartNumber: String!
+  sparePartSupportability: String!
+}
+
+type EmcVnxeDiskSummary {
+  disks: [EmcVnxeDisk!]!
+  partNumber: String!
+  quantity: Int!
+}
+
+type EmcVnxeEnclosure {
+  manufacturer: String!
+  model: String!
+  name: String!
+  partNumber: String!
+  serialNumber: String!
+  sparePartNumber: String!
+  sparePartSupportability: String!
+}
+
+type EmcVnxeEnclosureSummary {
+  diskFormFactor: String!
+  enclosures: [EmcVnxeEnclosure!]!
+  quantity: Float!
+}
+
+type ItemMasterDisk {
+  alternates: [AlternateSku!]!
+  capacity: String!
+  container: String!
+  formFactor: String!
+  id: String!
+  interface: String!
+  manufacturer: String!
+  partitionKey: String!
+  ref: Reference!
+  sku: String!
+  speed: String!
+  supportedStatus: String!
+  transferRate: String!
+  type: String!
+}
+
+type Parser {
+  parserName: String!
 }
 
 type Query {
-  bestBurger: [Burger!]!
+  configFile(id: String!): ConfigurationFile!
+  dataDomain(id: String!): [DataDomain!]!
+  emcSymmetrix(id: String!): [EmcSymmetrix!]!
+  emcVnxe(id: String!): EmcVnxe!
+  list(parserName: String!, skip: Int! = 0, take: Int! = 25): [ConfigurationFile!]!
+  parsers: [Parser!]!
+}
+
+type Reference {
+  container: String!
+  id: String!
+  partitionKey: String!
+}
+
+type SymmetrixBay {
+  driveEnclosureCount: Int!
+  name: String!
+  standbyPowerSupplyCount: Int!
+  validationResult: ValidationResult!
+}
+
+type SymmetrixBaySummary {
+  driveBayCount: Int!
+  driveBays: [SymmetrixBay!]!
+  enclosureCount: Int!
+  powerSupplyCount: Int!
+  subTitle: Int!
+  systemBayCount: Int!
+  systemBays: [SymmetrixBay!]!
+}
+
+type SymmetrixDaeSummary {
+  daeCount: Int!
+  daes: [SymmmetrixDae!]!
+  engineId: Int!
+  location: String!
+  partNumber: String!
+  powerSupplyCount: Int!
+  serialNumber: String!
+}
+
+type SymmetrixDimm {
+  dimmId: ID!
+  engine: String!
+  location: String!
+  partNumber: String!
+  serialNumber: String!
+  validationResult: ValidationResult!
+}
+
+type SymmetrixDimmSummary {
+  dimmCount: Int!
+  dimms: [SymmetrixDimm!]!
+  engineId: Int!
+  location: String!
+  partNumber: String!
+  serialNumber: String!
+}
+
+type SymmetrixDirector {
+  coreCount: Int!
+  engineNumber: Int!
+  id: String!
+  portCount: Int!
+  status: String!
+  type: String!
+  validationResult: ValidationResult!
+}
+
+type SymmetrixDirectorSummary {
+  directorCount: Int!
+  directors: [SymmetrixDirector!]!
+  subTitle: String!
+}
+
+type SymmetrixDisk {
+  capacityFree: String!
+  capacityTotal: String!
+  capacityUsed: String!
+  daeId: Int!
+  directorId: Int!
+  diskId: Int!
+  location: String!
+  manufacturer: String!
+  productId: String!
+  serialNumber: String!
+  validationResult: ValidationResult!
+}
+
+type SymmetrixDiskGroup {
+  diskCapacity: Int!
+  diskCount: Int!
+  diskSpeed: Int!
+  diskType: String!
+  name: String!
+  validationResult: ValidationResult!
+}
+
+type SymmetrixDiskGroupSummary {
+  diskGroupCount: Int!
+  diskGroups: [SymmetrixDiskGroup!]!
+  subTitle: String!
+}
+
+type SymmetrixDiskSummary {
+  daeId: Int!
+  directorId: Int!
+  diskCount: Int!
+  disks(skip: Int! = 0, take: Int! = 25): [SymmetrixDisk!]!
+  subTitle: String!
+}
+
+type SymmetrixSystemSummary {
+  cacheSize: Int!
+  enginecount: Int!
+  isValid: Boolean!
+  memoryBoardcount: Int!
+  model: String!
+  serialNumber: String!
+}
+
+type SymmmetrixDae {
+  daeId: ID!
+  location: String!
+  partNumber: String!
+  serialNumber: String!
+  validationResult: ValidationResult!
+}
+
+type ValidationResult {
+  isSuccess: Boolean!
 }

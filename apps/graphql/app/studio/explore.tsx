@@ -7,12 +7,12 @@ export interface Props {
 
 const defaultQuery = `
 query {
-  bestBurger {
-    id
-    type
-    customer {
-      firstName
-    }
+  parsers {
+    parserName
+  }
+  emcVnxe {
+    daeDisks
+    daeEnclosures
   }
 }`;
 
@@ -24,7 +24,7 @@ export function Explore(props: Props) {
       initialState={{
         document: defaultQuery,
         displayOptions: {
-          showHeadersAndEnvVars: false,
+          showHeadersAndEnvVars: true,
           docsPanelState: 'closed',
         },
       }}

@@ -1,22 +1,11 @@
 import "reflect-metadata";
 
+import next from 'next';
 import { apollo } from './apollo';
 import { createServer } from 'http';
 import { parse } from 'url';
-import { __, compose, curryN, map, prop } from "ramda";
-import * as path from 'path';
-import next from 'next';
-
-const enval = compose(prop(__, process.env));
-const curDir = curryN(2, path.join)(__dirname);
-
-/**
- * Environment Variables (get em while they're hot)
- */
-const dir = enval('NX_NEXT_DIR') || curDir('..');
-const dev = enval('NODE_ENV') === 'development';
-const port = parseInt(enval('WEB_PORT'));
-const host = enval('HOST');
+import { map } from "ramda";
+import { dev, dir, port, host } from "./helpers/env";
 
 async function main(...chain: string[]) {
   const nextApp = next({ dev, dir });
