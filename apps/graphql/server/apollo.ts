@@ -23,19 +23,6 @@ export interface Api {
  */
 export const parsingApi = path<ParsingApi>(['dataSources', 'parsingApi'])
 
-/**
- * Creates a contextualized executable with a persisted key-value cache.
- * @param {Function} closure - The closure function to execute with the cache as an argument.
- * @returns {Result} - A reusable callback to invoke the closure function.
- */
-function contextualize<Result>(
-  closure: (cache: InMemoryLRUCache<string>) => Result
-) {
-  return () => closure(
-    new InMemoryLRUCache()
-  );
-}
-
 export async function apollo() {
   const schema = await buildSchema({
     resolvers: [

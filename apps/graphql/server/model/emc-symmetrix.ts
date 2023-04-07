@@ -220,7 +220,6 @@ export class SymmetrixDiskSummary {
   filtered(@Args(Of(Paginate)) filter: Paginate) {
     return take(filter.take, this.disks.slice(filter.skip));
   }
-
   // Hidden field - aliased as `filtered`
   disks: SymmetrixDisk[];
 }

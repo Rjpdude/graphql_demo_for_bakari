@@ -8,6 +8,9 @@ import { map } from "ramda";
 import { dev, dir, port, host } from "./helpers/env";
 
 async function main(...chain: string[]) {
+  if (!dev) {
+    return chain;
+  }
   const nextApp = next({ dev, dir });
   const handle = nextApp.getRequestHandler();
 
@@ -28,6 +31,7 @@ function shutdown(error: unknown) {
   process.exit(0);
 }
 
-apollo().then(main)
+apollo()
+  .then(main)
   .then(map(console.log))
   .catch(shutdown);
