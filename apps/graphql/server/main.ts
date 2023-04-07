@@ -1,5 +1,9 @@
+import "reflect-metadata";
+
+import { apollo } from './apollo';
 import { createServer } from 'http';
 import { parse } from 'url';
+import { map } from "ramda";
 import * as path from 'path';
 import next from 'next';
 
@@ -8,8 +12,8 @@ const dev = process.env.NODE_ENV === 'development';
 const hostname = process.env.HOST || 'localhost';
 const port = process.env.PORT ? parseInt(process.env.PORT) : 4200;
 
-async function main() {
-  const nextApp = next({ dev, dir });
+async function main(...chain: string[]) {
+  const nextApp = next({ dev, dir});
   const handle = nextApp.getRequestHandler();
 
   await nextApp.prepare();
@@ -21,10 +25,14 @@ async function main() {
 
   server.listen(port, hostname);
 
-  console.log(`[ ready ] on http://${hostname}:${port}`);
+  return chain.concat(`🌍 Web Server ready at http://${hostname}:${port}`)
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+function shutdown(error: any) {
+  console.log('[ERROR] Shutting down...', error);
+  process.exit(0);
+}
+
+apollo().then(main)
+  .then(map(console.log))
+  .catch(shutdown);

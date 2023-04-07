@@ -1,14 +1,17 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "preserve",
+    "strict": false,
     "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "module": "esnext",
+    "jsx": "preserve",
+    "jsxImportSource": "react",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -29,7 +32,8 @@
     "**/*.js",
     "**/*.jsx",
     "next-env.d.ts",
-    "../../dist/apps/graphql/.next/types/**/*.ts"
+    "../../dist/apps/graphql/.next/types/**/*.ts",
+    "../../apps/graphql/.next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
