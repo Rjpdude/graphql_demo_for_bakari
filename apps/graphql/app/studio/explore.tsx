@@ -1,17 +1,28 @@
 import { ApolloExplorer } from "@apollo/explorer/react"
 
-/* eslint-disable-next-line */
-export interface LibraryProps {
+export interface Props {
   schema: string;
   endpoint: string;
 }
 
-export function Explore(props: LibraryProps) {
+const defaultQuery = `
+query {
+  bestBurger {
+    id
+    type
+    customer {
+      firstName
+    }
+  }
+}`;
+
+export function Explore(props: Props) {
   return (
     <ApolloExplorer
       schema={props.schema}
       endpointUrl={`${props.endpoint}/graphql`}
       initialState={{
+        document: defaultQuery,
         displayOptions: {
           showHeadersAndEnvVars: false,
           docsPanelState: 'closed',

@@ -3,10 +3,25 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-type Parser {
-  parserName: String!
+type Burger {
+  customer: [Customer!]!
+  id: String!
+  price: String!
+  resturant: [String!]!
+  title: String!
+  type: String!
+}
+
+type Customer {
+  firstName: String!
+  id: ID!
+  lastName: String!
+}
+
+type Mutation {
+  createBurger(id: String!, price: String!, title: String!, type: String!): Burger!
 }
 
 type Query {
-  parsers: [Parser!]!
+  bestBurger: [Burger!]!
 }
