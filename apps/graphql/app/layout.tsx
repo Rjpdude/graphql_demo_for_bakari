@@ -1,16 +1,23 @@
-export const metadata = {
-  title: 'Apollo Sandbox',
-  description: 'React & Next.js',
-}
+'use client'
+
+import { CacheProvider } from '@chakra-ui/next-js'
+import { ChakraProvider } from '@chakra-ui/react'
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang='en'>
+      <head />
+      <body>
+        <CacheProvider>
+          <ChakraProvider resetCSS={true}>
+            {children}
+          </ChakraProvider>
+        </CacheProvider>
+      </body>
     </html>
   )
 }

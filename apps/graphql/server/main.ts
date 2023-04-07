@@ -3,17 +3,23 @@ import "reflect-metadata";
 import { apollo } from './apollo';
 import { createServer } from 'http';
 import { parse } from 'url';
-import { map } from "ramda";
+import { __, compose, curryN, map, prop } from "ramda";
 import * as path from 'path';
 import next from 'next';
 
-const dir = process.env.NX_NEXT_DIR || path.join(__dirname, '..');
-const dev = process.env.NODE_ENV === 'development';
-const hostname = process.env.HOST || 'localhost';
-const port = process.env.PORT ? parseInt(process.env.PORT) : 4200;
+const enval = compose(prop(__, process.env));
+const curDir = curryN(2, path.join)(__dirname);
+
+/**
+ * Environment Variables (get em while they're hot)
+ */
+const dir = enval('NX_NEXT_DIR') || curDir('..');
+const dev = enval('NODE_ENV') === 'development';
+const port = parseInt(enval('WEB_PORT'));
+const host = enval('HOST');
 
 async function main(...chain: string[]) {
-  const nextApp = next({ dev, dir});
+  const nextApp = next({ dev, dir });
   const handle = nextApp.getRequestHandler();
 
   await nextApp.prepare();
@@ -23,12 +29,12 @@ async function main(...chain: string[]) {
     handle(req, res, parsedUrl);
   });
 
-  server.listen(port, hostname);
+  server.listen(port, host);
 
-  return chain.concat(`🌍 Web Server ready at http://${hostname}:${port}`)
+  return chain.concat(`🌍 Web Server ready at http://${host}:${port}`)
 }
 
-function shutdown(error: any) {
+function shutdown(error: unknown) {
   console.log('[ERROR] Shutting down...', error);
   process.exit(0);
 }
