@@ -1,19 +1,24 @@
-import styles from "./index.module.css";
+import styled from '@emotion/styled';
+
+const StyledPage = styled.div`
+  .page {
+  }
+`;
 
 export function Index() {
   /*
    * Replace the elements below with your own.
    *
-   * Note: The corresponding styles are in the ./index.css file.
+   * Note: The corresponding styles are in the ./index.@emotion/styled file.
    */
   return (
-    <div className={styles.page}>
+    <StyledPage>
       <div className="wrapper">
         <div className="container">
           <div id="welcome">
             <h1>
               <span> Hello there, </span>
-              Welcome ppt-graphql 👋
+              Welcome graphql 👋
             </h1>
           </div>
 
@@ -292,8 +297,8 @@ export function Index() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {" "}
-                  What is Nx Cloud?{" "}
+                  {' '}
+                  What is Nx Cloud?{' '}
                 </a>
               </div>
               <a
@@ -411,7 +416,7 @@ export function Index() {
           </p>
         </div>
       </div>
-    </div>
+    </StyledPage>
   );
 }
 
