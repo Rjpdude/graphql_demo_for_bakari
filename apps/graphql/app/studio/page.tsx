@@ -1,6 +1,6 @@
 'use client';
 
-import { Explore } from "@frontend/library"
+import { Explore } from "./explore"
 import { Global, css } from '@emotion/react';
 
 const global = css`
