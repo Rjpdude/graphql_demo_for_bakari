@@ -1,6 +1,6 @@
 'use client';
 
-import { ApolloExplorer } from "@apollo/explorer/react"
+import { Explore } from "@frontend/library"
 import { Global, css } from '@emotion/react';
 
 const global = css`
@@ -45,15 +45,9 @@ export default function Page() {
     <main>
       <section>
         <Global styles={global} />
-        <ApolloExplorer
+        <Explore
           schema=""
-          endpointUrl='http://localhost:4000/graphql'
-          initialState={{
-            displayOptions: {
-              showHeadersAndEnvVars: false,
-              docsPanelState: 'closed',
-            },
-          }}
+          endpoint="http://localhost:4000"
         />
       </section>
     </main>
