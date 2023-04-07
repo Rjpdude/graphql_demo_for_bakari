@@ -4,7 +4,6 @@
     "module": "commonjs",
     "noEmit": false,
     "incremental": true,
-    "tsBuildInfoFile": "../..//tmp/buildcache/apps/graphql/server",
     "types": ["node"]
   },
   "include": ["server/**/*.ts"]
