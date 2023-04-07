@@ -1,3 +1,5 @@
+'use client';
+
 import { ApolloExplorer } from "@apollo/explorer/react"
 
 export interface Props {
@@ -20,7 +22,7 @@ export function Explore(props: Props) {
   return (
     <ApolloExplorer
       schema={props.schema}
-      endpointUrl={`${props.endpoint}/graphql`}
+      endpointUrl={props.endpoint}
       initialState={{
         document: defaultQuery,
         displayOptions: {

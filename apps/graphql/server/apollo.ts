@@ -4,7 +4,12 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { buildSchema } from 'type-graphql';
 import { RootQuery } from './root';
 import { ParsingApi } from './api/parsing.api';
+
+import { enval } from './helpers/env'
 import { path } from 'ramda';
+
+const port = parseInt(enval('GRAPHQL_PORT'));
+const host = enval('GRAPHQL_HOST');
 
 /**
  * Object describing the data context for a GraphQL resolver.
@@ -29,6 +34,7 @@ export async function apollo() {
       RootQuery,
     ],
     emitSchemaFile: true,
+    nullableByDefault: false,
   });
 
   const cache = new InMemoryLRUCache();
@@ -42,7 +48,8 @@ export async function apollo() {
     server,
     {
       listen: {
-        port: 4000,
+        port,
+        host,
       },
       context: async ({ req }) => ({
         dataSources: {
