@@ -3,8 +3,6 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { buildSchema } from 'type-graphql';
 import { BurgerResolver } from './mock/resolver';
 
-//import { RootQuery } from './model/query';
-
 export async function apollo() {
   const schema = await buildSchema({
     resolvers: [
